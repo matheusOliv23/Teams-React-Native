@@ -1,4 +1,6 @@
+import { Button } from "@components/Button";
 import { ButtonIcon } from "@components/ButtonIcon";
+import { EmptyList } from "@components/EmptyList";
 import { Filter } from "@components/Filter";
 import { Header } from "@components/Header";
 import { Highlight } from "@components/Highlight";
@@ -45,10 +47,19 @@ export default function Players() {
       <FlatList
         data={players}
         keyExtractor={(item) => item}
-        renderItem={({ item }) => {
-          return <PlayerCard onRemove={() => {}} name={item} />;
-        }}
+        renderItem={({ item }) => (
+          <PlayerCard onRemove={() => {}} name={item} />
+        )}
+        ListEmptyComponent={() => (
+          <EmptyList message="Não há pessoas nessa lista" />
+        )}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={[
+          { paddingBottom: 100 },
+          players.length === 0 && { flex: 1 },
+        ]}
       />
+      <Button title="Remover Turma" type="SECONDARY" />
     </S.Container>
   );
 }
