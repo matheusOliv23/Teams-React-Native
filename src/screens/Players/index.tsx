@@ -1,6 +1,7 @@
 import { ButtonIcon } from "@components/ButtonIcon";
 import { Header } from "@components/Header";
 import { Highlight } from "@components/Highlight";
+import { Input } from "@components/Input";
 import * as S from "./styles";
 
 export default function Players() {
@@ -11,7 +12,10 @@ export default function Players() {
         title="Nome da Turma"
         subtitle="Adicione as pessoas e separe os times"
       />
-      <ButtonIcon icon="add" />
+      <S.Form>
+        <Input placeholder="Nome da pessoa" autoCorrect={false} />
+        <ButtonIcon icon="add" />
+      </S.Form>
     </S.Container>
   );
 }
