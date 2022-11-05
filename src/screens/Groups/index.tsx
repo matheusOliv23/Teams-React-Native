@@ -1,3 +1,4 @@
+import { Button } from "@components/Button";
 import { EmptyList } from "@components/EmptyList";
 import { GroupCard } from "@components/GroupCard";
 import { Header } from "@components/Header";
@@ -25,6 +26,7 @@ export default function Groups() {
           <EmptyList message="Cadastre a primeira turma" />
         )}
       />
+      <Button title="Criar nova turma" />
     </S.Container>
   );
 }
