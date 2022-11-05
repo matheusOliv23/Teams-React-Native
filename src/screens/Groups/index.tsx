@@ -9,7 +9,7 @@ import { useNavigation } from "@react-navigation/native";
 import * as S from "./styles";
 
 export default function Groups() {
-  const [groups, setGroups] = useState(["Estudos", "Família", "Amigos"]);
+  const [groups, setGroups] = useState([]);
 
   const navigation = useNavigation();
   const renderItem = ({ item }: { item: string }) => {

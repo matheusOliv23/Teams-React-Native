@@ -6,13 +6,20 @@ import { Header } from "@components/Header";
 import { Highlight } from "@components/Highlight";
 import { Input } from "@components/Input";
 import { PlayerCard } from "@components/PlayerCard";
+import { useRoute } from "@react-navigation/native";
 import React, { useState } from "react";
 import { FlatList } from "react-native";
 import * as S from "./styles";
 
+type RouteParams = {
+  group: string;
+};
+
 export default function Players() {
   const [team, setTeam] = useState("Time A");
-  const [players, setPlayers] = useState(["Matheus", "Carlos"]);
+  const [players, setPlayers] = useState([]);
+  const route = useRoute();
+  const { group } = route.params as RouteParams;
 
   const renderItem = ({ item }: { item: string }) => {
     return (
@@ -27,7 +34,7 @@ export default function Players() {
     <S.Container>
       <Header showBackButton />
       <Highlight
-        title="Nome da Turma"
+        title={group}
         subtitle="Adicione as pessoas e separe os times"
       />
       <S.Form>
@@ -36,7 +43,7 @@ export default function Players() {
       </S.Form>
       <S.HeaderList>
         <FlatList
-          data={["Time A", "Time B"]}
+          data={[]}
           keyExtractor={(item) => item}
           renderItem={renderItem}
           horizontal
