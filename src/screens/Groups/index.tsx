@@ -5,14 +5,20 @@ import { Header } from "@components/Header";
 import { Highlight } from "@components/Highlight";
 import { useState } from "react";
 import { FlatList } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import * as S from "./styles";
 
 export default function Groups() {
   const [groups, setGroups] = useState(["Estudos", "Família", "Amigos"]);
 
+  const navigation = useNavigation();
   const renderItem = ({ item }: { item: string }) => {
     return <GroupCard title={item} />;
   };
+
+  function handleNewGroup() {
+    navigation.navigate("new");
+  }
   return (
     <S.Container>
       <Header />
@@ -27,7 +33,7 @@ export default function Groups() {
         )}
         showsVerticalScrollIndicator={false}
       />
-      <Button title="Criar nova turma" />
+      <Button onPress={handleNewGroup} title="Criar nova turma" />
     </S.Container>
   );
 }
