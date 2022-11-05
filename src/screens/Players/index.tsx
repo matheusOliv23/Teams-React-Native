@@ -3,9 +3,23 @@ import { Filter } from "@components/Filter";
 import { Header } from "@components/Header";
 import { Highlight } from "@components/Highlight";
 import { Input } from "@components/Input";
+import React, { useState } from "react";
+import { FlatList } from "react-native";
 import * as S from "./styles";
 
 export default function Players() {
+  const [team, setTeam] = useState("Time A");
+  const [players, setPlayers] = useState([]);
+
+  const renderItem = ({ item }: { item: string }) => {
+    return (
+      <Filter
+        isActive={item === team}
+        onPress={() => setTeam(item)}
+        title={item}
+      />
+    );
+  };
   return (
     <S.Container>
       <Header showBackButton />
@@ -17,7 +31,15 @@ export default function Players() {
         <Input placeholder="Nome da pessoa" autoCorrect={false} />
         <ButtonIcon icon="add" />
       </S.Form>
-      <Filter title="Turma A" />
+      <S.HeaderList>
+        <FlatList
+          data={["Time A", "Time B"]}
+          keyExtractor={(item) => item}
+          renderItem={renderItem}
+          horizontal
+        />
+        <S.PlayersNumber>{players.length}</S.PlayersNumber>
+      </S.HeaderList>
     </S.Container>
   );
 }
