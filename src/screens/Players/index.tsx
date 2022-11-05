@@ -3,13 +3,14 @@ import { Filter } from "@components/Filter";
 import { Header } from "@components/Header";
 import { Highlight } from "@components/Highlight";
 import { Input } from "@components/Input";
+import { PlayerCard } from "@components/PlayerCard";
 import React, { useState } from "react";
 import { FlatList } from "react-native";
 import * as S from "./styles";
 
 export default function Players() {
   const [team, setTeam] = useState("Time A");
-  const [players, setPlayers] = useState([]);
+  const [players, setPlayers] = useState(["Matheus", "Carlos"]);
 
   const renderItem = ({ item }: { item: string }) => {
     return (
@@ -40,6 +41,14 @@ export default function Players() {
         />
         <S.PlayersNumber>{players.length}</S.PlayersNumber>
       </S.HeaderList>
+
+      <FlatList
+        data={players}
+        keyExtractor={(item) => item}
+        renderItem={({ item }) => {
+          return <PlayerCard onRemove={() => {}} name={item} />;
+        }}
+      />
     </S.Container>
   );
 }
