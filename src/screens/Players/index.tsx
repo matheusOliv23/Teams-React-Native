@@ -6,14 +6,13 @@ import { Header } from "@components/Header";
 import { Highlight } from "@components/Highlight";
 import { Input } from "@components/Input";
 import { PlayerCard } from "@components/PlayerCard";
-import { useFocusEffect, useRoute } from "@react-navigation/native";
+import { useRoute } from "@react-navigation/native";
 import { playerAddbyGroup } from "@storage/player/playerAddByGroup";
 import { getPlayersByGroupAndTeam } from "@storage/player/playerGetByGroupAndTeam";
-import { playersGetByGroup } from "@storage/player/playersGetByGroup";
 import { PlayerStorageDTO } from "@storage/player/PlayerStorageDTO";
 import { AppError } from "@utils/AppError";
-import React, { useEffect, useState } from "react";
-import { Alert, FlatList } from "react-native";
+import React, { useEffect, useState, useRef } from "react";
+import { Alert, FlatList, TextInput } from "react-native";
 
 import * as S from "./styles";
 
@@ -28,6 +27,8 @@ export default function Players() {
   const route = useRoute();
   const { group } = route.params as RouteParams;
 
+  const newPlayerNameInfoRef = useRef<TextInput>(null);
+
   async function handleAddPlayer() {
     if (newPlayerName.trim().length === 0) {
       return Alert.alert("Nova pessoa", "Informe o nome da pessoa ");
@@ -39,8 +40,9 @@ export default function Players() {
 
     try {
       await playerAddbyGroup(newPlayer, group);
+      newPlayerNameInfoRef.current?.blur();
+      setNewPlayerName("");
       fetchPlayersByTeam();
-      console.log(players);
     } catch (error) {
       if (error instanceof AppError) {
         Alert.alert("Nova pessoa", error.message);
@@ -83,6 +85,8 @@ export default function Players() {
       />
       <S.Form>
         <Input
+          inputRef={newPlayerNameInfoRef}
+          value={newPlayerName}
           onChangeText={setNewPlayerName}
           placeholder="Nome da pessoa"
           autoCorrect={false}
