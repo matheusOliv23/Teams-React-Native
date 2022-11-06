@@ -8,7 +8,7 @@ import { FlatList } from "react-native";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import * as S from "./styles";
 import { groupsGetAll } from "@storage/group/groupsGetAll";
-import { Alert } from "react-native";
+
 
 export default function Groups() {
   const [groups, setGroups] = useState<string[]>([]);
@@ -45,7 +45,7 @@ export default function Groups() {
   return (
     <S.Container>
       <Header />
-      <Highlight title="Turmas" subtitle="Jogue com sua turma" />
+      <Highlight title="Teams" subtitle="Jogue com sua turma" />
       <FlatList
         data={groups}
         keyExtractor={(item) => item}
