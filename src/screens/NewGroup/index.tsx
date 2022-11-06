@@ -5,17 +5,17 @@ import { ReactNode, useState } from "react";
 import * as S from "./styles";
 import { Input } from "@components/Input";
 import { useNavigation } from "@react-navigation/native";
-
-interface NewGroupProps {
-  children: ReactNode;
-}
+import { groupCreate } from "@storage/group/groupCreate";
 
 export default function NewGroup() {
   const [group, setGroup] = useState("");
   const navigation = useNavigation();
-  function handleNew() {
+
+  async function handleNew() {
+    await groupCreate(group);
     navigation.navigate("players", { group });
   }
+
   return (
     <S.Container>
       <Header showBackButton />

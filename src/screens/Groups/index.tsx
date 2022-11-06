@@ -3,13 +3,14 @@ import { EmptyList } from "@components/EmptyList";
 import { GroupCard } from "@components/GroupCard";
 import { Header } from "@components/Header";
 import { Highlight } from "@components/Highlight";
-import { useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { FlatList } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import * as S from "./styles";
+import { groupsGetAll } from "@storage/group/groupsGetAll";
 
 export default function Groups() {
-  const [groups, setGroups] = useState([]);
+  const [groups, setGroups] = useState<string[]>([]);
 
   const navigation = useNavigation();
   const renderItem = ({ item }: { item: string }) => {
@@ -19,6 +20,23 @@ export default function Groups() {
   function handleNewGroup() {
     navigation.navigate("new");
   }
+
+  async function fetchGroups() {
+    try {
+      const data = await groupsGetAll();
+      setGroups(data);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchGroups();
+    }, [])
+  );
+
   return (
     <S.Container>
       <Header />
