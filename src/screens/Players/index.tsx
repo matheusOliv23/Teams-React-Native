@@ -9,6 +9,7 @@ import { PlayerCard } from "@components/PlayerCard";
 import { useRoute } from "@react-navigation/native";
 import { playerAddbyGroup } from "@storage/player/playerAddByGroup";
 import { getPlayersByGroupAndTeam } from "@storage/player/playerGetByGroupAndTeam";
+import { playerRemoveByGroup } from "@storage/player/playerRemoveByGroup";
 import { PlayerStorageDTO } from "@storage/player/PlayerStorageDTO";
 import { AppError } from "@utils/AppError";
 import React, { useEffect, useState, useRef } from "react";
@@ -63,6 +64,16 @@ export default function Players() {
     }
   }
 
+  async function handleRemovePlayer(playerName: string) {
+    try {
+      await playerRemoveByGroup(playerName, group);
+      fetchPlayersByTeam();
+    } catch (error) {
+      console.log(error);
+      Alert.alert("Remover pessoa", "Não foi possivel remover essa pessoa");
+    }
+  }
+
   useEffect(() => {
     fetchPlayersByTeam();
   }, [team]);
@@ -90,6 +101,8 @@ export default function Players() {
           onChangeText={setNewPlayerName}
           placeholder="Nome da pessoa"
           autoCorrect={false}
+          onSubmitEditing={handleAddPlayer}
+          returnKeyType="done"
         />
         <ButtonIcon onPress={handleAddPlayer} icon="add" />
       </S.Form>
@@ -107,7 +120,10 @@ export default function Players() {
         data={players}
         keyExtractor={(item) => item.name}
         renderItem={({ item }) => (
-          <PlayerCard onRemove={() => {}} name={item.name} />
+          <PlayerCard
+            onRemove={() => handleRemovePlayer(item.name)}
+            name={item.name}
+          />
         )}
         ListEmptyComponent={() => (
           <EmptyList message="Não há pessoas nessa lista" />
