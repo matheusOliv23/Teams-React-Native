@@ -3,11 +3,12 @@ import { EmptyList } from "@components/EmptyList";
 import { GroupCard } from "@components/GroupCard";
 import { Header } from "@components/Header";
 import { Highlight } from "@components/Highlight";
-import { useEffect, useState, useCallback } from "react";
+import { useState, useCallback } from "react";
 import { FlatList } from "react-native";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import * as S from "./styles";
 import { groupsGetAll } from "@storage/group/groupsGetAll";
+import { Alert } from "react-native";
 
 export default function Groups() {
   const [groups, setGroups] = useState<string[]>([]);
