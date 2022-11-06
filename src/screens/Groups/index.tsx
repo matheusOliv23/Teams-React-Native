@@ -14,9 +14,7 @@ export default function Groups() {
   const [groups, setGroups] = useState<string[]>([]);
 
   const navigation = useNavigation();
-  const renderItem = ({ item }: { item: string }) => {
-    return <GroupCard title={item} />;
-  };
+
 
   function handleNewGroup() {
     navigation.navigate("new");
@@ -32,12 +30,18 @@ export default function Groups() {
     }
   }
 
+  function handleOpenGroup(group: string) {
+    navigation.navigate("players", { group });
+  }
   useFocusEffect(
     useCallback(() => {
       fetchGroups();
     }, [])
   );
 
+  const renderItem = ({ item }: { item: string }) => {
+    return <GroupCard onPress={() => handleOpenGroup(item)} title={item} />;
+  };
   return (
     <S.Container>
       <Header />
