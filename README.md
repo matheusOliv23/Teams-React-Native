@@ -2,6 +2,10 @@
 
 ![ezgif com-gif-maker (2)](https://user-images.githubusercontent.com/78116908/200196399-5c68a138-811e-44f8-ad6d-4d429c3e9f1c.gif)
 
+## Objetivo da aplicação
+
+Esse app serve para interagir com seus colegas e amigos criando grupos, adicionando e removendo membros.
+
 ## Tecnologias e Conceitos
 
 - React Native Expo
